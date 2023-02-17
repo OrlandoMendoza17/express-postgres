@@ -6,8 +6,8 @@ const pool = require("../connection")
 
 class NewsService {
   async getAll() {
-    const response = await pool.query("SELECT * FROM public.tasks")
-    console.log(response)
+    const response = await pool.query("SELECT * FROM public.news")
+    return response;
 
     // const client = await getConnection()
     // const response = await client.query("SELECT * FROM sipi.tasks")
@@ -16,8 +16,13 @@ class NewsService {
     // const response = await sequelize.query("SELECT * FROM sipi.tasks")
     // const [data, length] = await sequelize.query("SELECT * FROM dbo.tbl_carrera")
     // console.log(response)
-
-    return response.rows;
+  }
+  
+  async findOne(id){
+    const response = await pool.query(`SELECT * FROM public.news WHERE id = ${id}`)
+    console.log(response)
+    
+    return response.rows[0];
   }
 }
 
