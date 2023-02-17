@@ -8,12 +8,9 @@ const service = new NewsService()
 
 router.get("/", async (request, response) => {
   try {
-    const { rowCount, rows } = await service.getAll()
-
-    response.json({
-      length: rowCount,
-      data: rows,
-    })
+    
+    const news = await service.getAll()
+    response.json(news)
 
   } catch (error) {
     console.log(error)
@@ -24,10 +21,17 @@ router.get("/", async (request, response) => {
 })
 
 router.get("/:id", async (request, response) => {
+  try {
 
-  const fetchedNew = await service.findOne(request.params.id)
-
-  response.json({ ...fetchedNew })
+    const fetchedNew = await service.findOne(request.params.id)
+    response.json(fetchedNew)
+    
+  } catch (error) {
+    console.log(error)
+    response.json({
+      error: "There has been an error!",
+    })
+  }
 })
 
 module.exports = router;
