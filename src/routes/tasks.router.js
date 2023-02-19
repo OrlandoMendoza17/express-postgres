@@ -1,24 +1,21 @@
-const express = require("express")
+const express = require("express");
 
 const router = express.Router()
 
 const TasksService = require("../services/tasks.service");
 
-router.get("/", async (request, response) => {
+router.get("/", async (request, response, next) => {
   try {
     const service = new TasksService()
-    const { rowCount, rows } = await service.getAll()
+    const tasks = await service.getAll()
 
     response.json({
-      length: rowCount,
-      data: rows,
+      length: tasks.length,
+      data: tasks,
     })
-    
+
   } catch (error) {
-    console.log(error)
-    response.json({
-      error: "There has been an error!"
-    })
+    next(error)
   }
 })
 
