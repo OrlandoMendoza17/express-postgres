@@ -5,6 +5,7 @@ const config = require("./src/config");
 const app = express()
 
 const routerApi = require("./src/routes");
+const { logErrors, zodErrorHandler, httpErrorHandler, errorHandler } = require("./src/middlewares/errors.handlers");
 
 const PORT = config.port;
 
@@ -23,13 +24,18 @@ const options = {
 
 app.use(cors());
 
-routerApi(app)
-
 app.get("/",(request, response) => {
   response.json({
     message: "Hello World!"
   })
 })
+
+routerApi(app)
+
+app.use(logErrors)
+app.use(zodErrorHandler)
+app.use(httpErrorHandler)
+app.use(errorHandler)
 
 app.listen(PORT, () => {
   console.log(`listening on PORT: http://localhost:${PORT}`)

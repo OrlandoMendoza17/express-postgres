@@ -10,4 +10,4 @@ const config = {
   dbName: "sipi",
 }
 
-module.exports = config
+module.exports = config 
