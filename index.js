@@ -22,7 +22,7 @@ const options = {
   }
 }
 
-app.use(cors());
+app.use(cors(options));
 
 app.get("/",(request, response) => {
   response.json({

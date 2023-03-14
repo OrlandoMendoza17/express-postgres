@@ -36,8 +36,10 @@ function httpErrorHandler(error, request, response, next) {
 }
 
 function errorHandler(error, request, response, next){
+  
   const httpError = new createHttpError.InternalServerError()
   const {name, statusCode, message} = httpError
+  
   response.status(statusCode).json({
     name, statusCode, message
   })
